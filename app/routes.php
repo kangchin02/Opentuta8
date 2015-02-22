@@ -43,6 +43,10 @@ require("routes/routeAdmin.php");
  */
 
 // User reset routes
+Route::get('courses', 'CoursesController@getIndex');
+Route::get('home', 'BlogController@getIndex');
+
+// User reset routes
 Route::get('user/reset/{token}', 'UserController@getReset');
 // User password reset
 Route::post('user/reset/{token}', 'UserController@postReset');
@@ -72,4 +76,10 @@ Route::get('{postSlug}', 'BlogController@getView');
 Route::post('{postSlug}', 'BlogController@postView');
 
 # Index Page - Last route, no matches
-Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));
+#Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));
+
+Route::get('/', function()
+{
+    // Redirect to home page
+    return Redirect::to('home#home', 302);
+});
