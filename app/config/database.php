@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'laravel',
 			'username'  => 'root',
-			'password'  => 'root',
+			'password'  => 'root', // update password here
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
