@@ -25,6 +25,8 @@ class BlogController extends BaseController {
 
         $this->post = $post;
         $this->user = $user;
+
+        View::share('page', $this->page);
     }
     
 	/**

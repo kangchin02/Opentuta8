@@ -44,7 +44,7 @@ require("routes/routeAdmin.php");
 
 // User reset routes
 Route::get('courses', 'CoursesController@getIndex');
-Route::get('home', 'BlogController@getIndex');
+Route::get('home', 'HomeController@getIndex');
 
 // User reset routes
 Route::get('user/reset/{token}', 'UserController@getReset');

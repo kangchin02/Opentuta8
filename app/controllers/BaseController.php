@@ -2,6 +2,10 @@
 
 class BaseController extends Controller {
 
+    const APPVERSION = 'TEAMCITY_BUILD_NUMBER';
+
+    protected $page;
+
     /**
      * Initializer.
      *
@@ -11,6 +15,13 @@ class BaseController extends Controller {
     public function __construct()
     {
         $this->beforeFilter('csrf', array('on' => 'post'));
+
+        $this->page = array(
+            "router" => "homeRouter",
+            "title" => "Opentuta",
+        );
+
+        View::share('appversion', self::APPVERSION);
     }
 
 	/**
