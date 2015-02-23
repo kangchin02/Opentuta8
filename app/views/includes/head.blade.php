@@ -20,6 +20,8 @@
     <script>
         window.APPVERSION = "{{{Config::get('app.version')}}}"
     </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/js/libs/require/require.js"></script>
     <script src="/assets/js/require-config.js"></script>
     <script>
