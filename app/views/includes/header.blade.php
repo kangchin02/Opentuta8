@@ -22,7 +22,7 @@
                 <div class="pull-left">
 
                     <a href="" class="pull-left" style="margin-top: 4px;margin-right: 15px;">
-                        <img style="height:30px;" src="assets/img/opentuta1.png">
+                        <img style="height:30px;" src="assets/img/opentuta.png">
                     </a>
 
                     <!--
