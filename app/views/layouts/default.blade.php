@@ -19,9 +19,7 @@
     @include('includes.header')
 
     <div id="main-body" style="padding-top: 52px;">
-        <div class="flat-grid" style="background-image: url(/assets/img/home.jpg);
-margin-bottom: 20px;
-height: 230px;">
+        <div class="flat-grid" style="background-image: url(/assets/img/home.jpg);margin-bottom: 20px;height: 230px;">
             <div id="home-search" class="section index-hgroup">
                 <div id="try-it-now"></div>
                 <input type="radio" name="lesson-type" class="hidden-content" value="on-demand" checked="">
@@ -156,11 +154,6 @@ height: 230px;">
 </div>
 
 @include('includes.footer')
-
-<!-- Visual Studio Browser Link -->
-<script type="application/json" id="__browserLink_initializationData">{"appName":"Chrome"}</script>
-<script type="text/javascript" src="http://localhost:60708/ae29f2f2d3a548ada9fe7694ed27158a/browserLink" async="async"></script>
-<!-- End Browser Link -->
 
 </body>
 </html>

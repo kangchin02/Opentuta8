@@ -1,6 +1,4 @@
-<header id="header" data-role="header" class="ui-bar" data-position="fixed" style="position: fixed;width: 100%;">
-
-
+<header id="header-region" data-role="header" class="ui-bar" data-position="fixed" style="position: fixed;width: 100%;">
     <div class="navbar">
         <div class="navbar-inner" style="padding-left:0px; padding-right:0px;">
             <div class="container" style="padding:9px 10px;width:100%;">

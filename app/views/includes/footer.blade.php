@@ -1,6 +1,4 @@
-<footer id="footer" data-role="footer" class="ui-bar" data-position="fixed">
-
-
+<footer id="footer-region" data-role="footer" class="ui-bar" data-position="fixed">
     <div>
         <div class="pull-left">
             <div>
@@ -15,6 +13,4 @@
 
         <div class="clearfix"></div>
     </div>
-
-
 </footer>
