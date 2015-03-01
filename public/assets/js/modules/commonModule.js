@@ -43,6 +43,10 @@ MainApplication.module("CommonModule", function(CommonModule, MainApplication, B
 
         loginUser: function(event){
             console.log("login");
+            var model = new Backbone.Model();
+            model.set({username:"test",email:"test@gmail.com",password:"password",password_confirmation:"password",csrf_token:AppServer.session});
+            model.url = "user";
+            model.save();
         },
 
         showSignup: function(event){

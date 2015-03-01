@@ -14,6 +14,7 @@
         window.APPVERSION = "{{{Config::get('app.version')}}}"
         window.AppServer = window.AppServer || {};
         window.AppServer.module = "{{{$page['module']}}}";
+        window.AppServer.session = "{{{ csrf_token() }}}";
         window.AppServer.debug =@if (Config::get('app.debug') == 1) true; @else false; @endif
     </script>
 

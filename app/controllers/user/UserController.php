@@ -45,6 +45,8 @@ class UserController extends BaseController {
      */
     public function postIndex()
     {
+        return Response::make("OK", 200);
+/*
         $user = $this->userRepo->signup(Input::all());
 
         if ($user->id) {
@@ -70,7 +72,7 @@ class UserController extends BaseController {
                 ->withInput(Input::except('password'))
                 ->with('error', $error);
         }
-
+*/
     }
 
     /**
@@ -119,6 +121,19 @@ class UserController extends BaseController {
     public function getCreate()
     {
         return View::make('site/user/create');
+    }
+
+
+    /**
+     * Displays the form for user creation
+     *
+     */
+    public function signup()
+    {
+        $username = Input::get('username');
+
+        $email = Input::get('email');
+
     }
 
 

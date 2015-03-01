@@ -78,8 +78,8 @@
                 <span class="auth-alert-message">This is a test!</span>
             </div>
             <form id="auth_form_register" onsubmit="return false;">
-                <div class="form-group"><input type="text" id="email" value="" placeholder="Email"></div>
-                <div class="form-group"><input type="password"id="password" value="" placeholder="Password"></div>
+                <div class="form-group"><input type="text" id="email" name="email" value="" placeholder="Email"></div>
+                <div class="form-group"><input type="password" id="password" name="password" value="" placeholder="Password"></div>
                 <a href="/auth/forgotpassword/" class="forgotpassword_link">I forgot my password</a>
                 <div class="no-feedback">
                     <button  id="btn-login-user" class="btn btn-sm btn-primary btn-signup btn-embossed" style="width: 100%;margin-top: 5px;">
