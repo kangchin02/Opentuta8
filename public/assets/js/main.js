@@ -17,6 +17,7 @@ require.config({
         'jquery'            :  "libs/jquery/jquery.min",
         'underscore'        : 'libs/lodash/lodash.min',
         'backbone'          : 'libs/backbone/backbone.min',
+        'backboneMarionette': 'libs/backbone.marionette/backbone.marionette.min',
         'backboneAssoc'     : 'libs/backbone/backbone-associations.min',
         'backboneExtended'  : 'libs/backbone/backboneExtended',
         'bootstrap'         : 'libs/bootstrap/bootstrap.min',
@@ -40,7 +41,7 @@ require.config({
         'backgrid-select-filter'    : 'libs/backgrid/extensions/backgrid-select-filter/backgrid-select-filter',
         'backgrid-paginator'        : 'libs/backgrid/extensions/paginator/backgrid-paginator.min',
         'backbone.paginator'        : 'libs/backgrid/extensions/paginator/backbone.paginator.min',
-        'backgridutils'        : 'utils/backgridutils',
+        'backgridutils'             : 'utils/backgridutils',
         'bootstrap-multiselect'     : 'libs/bootstrap/bootstrap-multiselect/bootstrap-multiselect',
         'sidr'              : 'libs/sidr/jquery.sidr.min',
         'waituntilexists'   : 'libs/jquery/plugins/jquery.waituntilexists',
@@ -77,6 +78,10 @@ require.config({
         backbone: {
             deps: ["jquery", "underscore"],
             exports: "Backbone"
+        },
+
+        backboneMarionette: {
+            deps: ["backbone"]
         },
 
         backboneExtended: {
@@ -166,17 +171,18 @@ require.config({
 
         app: {
             deps: [
-                "setup",
-                "data",
-                "handlebars",
+                //"setup",
+                //"data",
+                //"handlebars",
                 "json2",
                 "jquery",
                 "underscore",
                 "backbone",
-                "backboneExtended",
+                "backboneMarionette",
+                //"backboneExtended",
                 "bootstrap",
-                "jqueryutil",
-                "securitymanager",
+                //"jqueryutil",
+                //"securitymanager",
                 "modernizr"
             ]
         }
@@ -186,41 +192,10 @@ require.config({
     enforceDefine: false
 });
 
-require.config({
-    urlArgs : "version=" + BUILDTIME
-});
-
-define([
-    'app',
-    'utilsjs'
-],
+define(['app'],
     function (app) {
-
         $(document).ready(function(){
-
-            if (viewutils.isMobileLayout()) {
-
-                // When jQuery Mobile (JQM) is initialized, it triggers
-                // a "mobileinit" event; we need to set up a listener
-                // for that event before we pull in JQM, and do any
-                // necessary mobile setup and initialization.
-                //
-
-                require(["app-mobile", "libs/mobile-only/swipe"], function (appMobile) {
-                    $(document).bind("mobileinit", function() {
-                        appMobile.initialize();
-                    });
-                });
-
-                // Pull in JQM and do app init as usual
-                //
-                require(["jquerymobile"], function () {
-                    app.initialize();
-                });
-            }
-            else {
-                app.initialize();
-            }
+            MainApplication.start();
         });
     }
 );

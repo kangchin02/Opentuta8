@@ -17,7 +17,7 @@ class BaseController extends Controller {
         $this->beforeFilter('csrf', array('on' => 'post'));
 
         $this->page = array(
-            "router" => "homeRouter",
+            "module" => "homeModule",
             "title" => "Opentuta",
         );
 

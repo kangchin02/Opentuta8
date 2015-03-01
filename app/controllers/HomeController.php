@@ -40,7 +40,7 @@ class HomeController extends \BaseController {
         $posts = $this->post->orderBy('created_at', 'DESC')->paginate(10);
 
         // Show the page
-        return View::make('layouts/default', compact('posts', 'router'));
+        return View::make('layouts/default', compact('posts'));
     }
 
 	/**

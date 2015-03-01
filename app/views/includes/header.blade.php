@@ -1,11 +1,10 @@
-<header id="header-region" data-role="header" class="ui-bar" data-position="fixed" style="position: fixed;width: 100%;">
-    <div class="navbar">
+    <div id="main-navbar" class="navbar">
         <div class="navbar-inner" style="padding-left:0px; padding-right:0px;">
             <div class="container" style="padding:9px 10px;width:100%;">
                 <div class="pull-right">
                     <ul id="tab-nav-main" class="inline nav nav-pills hidden-tablet hidden-phone">
                         <li class="li-nav-main nav-main dropdown" name="more">
-                            <a data-toggle="modal" data-target="#login-modal">Login</a>
+                            <a id="btn-login">Login</a>
                         </li>
 
                         <li class="li-nav-main nav-main dropdown" name="more">
@@ -177,6 +176,5 @@ border-top-left-radius: 0px;margin-top: 3px;" type="button">Go!</button>
             </div>
         </div>
     </div>
-</header>
 
 

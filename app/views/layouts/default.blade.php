@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="{{{$page['router']}}}">
+<html lang="en" class="{{{$page['module']}}}">
 
 @include('includes.head')
 
@@ -16,7 +16,9 @@
     <p class=chromeframe>Your browser is <em>ancient!</em><a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p>
     <![endif]-->
 
-    @include('includes.header')
+    <header id="header-region" data-role="header" class="ui-bar" data-position="fixed" style="position: fixed;width: 100%;">
+        @include('includes.header')
+    </header>
 
     <div id="main-body" style="padding-top: 52px;">
         <div class="flat-grid" style="background-image: url(/assets/img/home.jpg);margin-bottom: 20px;height: 230px;">
@@ -56,13 +58,17 @@
     <div class="push hidden-phone"></div>
 </div>
 
+<footer id="footer-region" data-role="footer" class="ui-bar" data-position="fixed">
+    @include('includes.footer')
+</footer>
+
 <!-- Modal -->
 <div id="login-modal" class="modal-small hide slide" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-header">
         <span aria-hidden="true" data-dismiss="modal" style="float: right;cursor: pointer;">×</span>
         <div class="auth_inner_header">
             <h4 class="modal-title" style="float: left;">Login</h4>
-            <span class="register_header_link" style="margin-top: 15px;float: left;border-bottom: 1px solid #fff;margin-left: 55px;cursor: pointer;">Signup</span>
+            <span id="switch-signup" class="register_header_link" style="margin-top: 15px;float: left;border-bottom: 1px solid #fff;margin-left: 55px;cursor: pointer;">Signup</span>
         </div>
     </div>
 
@@ -71,13 +77,14 @@
             <div class="auth-alert" role="alert">
                 <span class="auth-alert-message">This is a test!</span>
             </div>
-            <form action="#" id="auth_form_register" name="auth_form_register">
-                <div class="form-group"><input type="text" name="email" id="email" value="" placeholder="Email"></div>
-                <div class="form-group"><input type="password" name="password" id="password" value="" placeholder="Password"></div>
+            <form id="auth_form_register" onsubmit="return false;">
+                <div class="form-group"><input type="text" id="email" value="" placeholder="Email"></div>
+                <div class="form-group"><input type="password"id="password" value="" placeholder="Password"></div>
                 <a href="/auth/forgotpassword/" class="forgotpassword_link">I forgot my password</a>
                 <div class="no-feedback">
-                    <button class="btn btn-sm btn-primary btn-signup btn-embossed" style="width: 100%;margin-top: 5px;">
-                        <span class="fui-facebook" style="display: none;margin-right: 20px;"><img src="assets/img/ajax-loader.gif" alt="checking"></span> Login</button>
+                    <button  id="btn-login-user" class="btn btn-sm btn-primary btn-signup btn-embossed" style="width: 100%;margin-top: 5px;">
+                        <span class="fui-facebook" style="display: none;margin-right: 20px;"><img src="assets/img/ajax-loader.gif" alt="checking"></span> Login
+                    </button>
                 </div>
             </form>
 
@@ -88,7 +95,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <div id="signup-modal" class="modal-small hide slide" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true" style="display: none;">
@@ -97,7 +103,7 @@
         <div class="auth_inner_header">
             <h4 class="modal-title" style="
     float: left;
-">Sign Up</h4><span class="register_header_link" style="
+">Sign Up</h4><span id="switch-login" class="register_header_link" style="
     margin-top: 15px;
     float: left;
     border-bottom: 1px solid #fff;
@@ -152,8 +158,6 @@
     </div>
 
 </div>
-
-@include('includes.footer')
 
 </body>
 </html>

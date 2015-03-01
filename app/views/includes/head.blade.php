@@ -12,9 +12,9 @@
 
     <script type="text/javascript">
         window.APPVERSION = "{{{Config::get('app.version')}}}"
-        window.opentutaserver = window.opentutaserver || {};
-        window.opentutaserver.router = "{{{$page['router']}}}";
-        window.opentutaserver.debug =@if (Config::get('app.debug') == 1) true; @else false; @endif
+        window.AppServer = window.AppServer || {};
+        window.AppServer.module = "{{{$page['module']}}}";
+        window.AppServer.debug =@if (Config::get('app.debug') == 1) true; @else false; @endif
     </script>
 
     <script src="/assets/js/libs/require/require.js"></script>

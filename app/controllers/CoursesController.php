@@ -25,7 +25,7 @@ class CoursesController extends \BaseController {
 
         $this->post = $post;
         $this->user = $user;
-        $this->page['router'] = "coursesrouter";
+        $this->page['module'] = "coursesModule";
 
         View::share('page', $this->page);
     }
@@ -41,7 +41,7 @@ class CoursesController extends \BaseController {
         $posts = $this->post->orderBy('created_at', 'DESC')->paginate(10);
 
         // Show the page
-        return View::make('client/index', compact('posts', 'router'));
+        return View::make('client/index', compact('posts'));
     }
 
 	/**
