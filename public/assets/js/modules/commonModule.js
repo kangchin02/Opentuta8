@@ -42,11 +42,19 @@ MainApplication.module("CommonModule", function(CommonModule, MainApplication, B
         },
 
         loginUser: function(event){
-            console.log("login");
             var model = new Backbone.Model();
-            model.set({username:"test",email:"test@gmail.com",password:"password",password_confirmation:"password",csrf_token:AppServer.session});
+            model.set({username:"test20",email:"test20@gmail.com",password:"password",password_confirmation:"password",csrf_token:AppServer.session});
             model.url = "user";
-            model.save();
+            var promise = model.save();
+            if (promise != null) {
+                //$$m.v.viewManager.showAlert("Deleting topic...");
+                promise.done(function(resp){
+                    //$$m.v.viewManager.showAlert("Topic deleted Successfully!");
+                    console.log("success");
+                }).fail(function(resp){
+                    console.log("failed");
+                });
+            }
         },
 
         showSignup: function(event){

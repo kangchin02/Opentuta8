@@ -45,11 +45,10 @@ class UserController extends BaseController {
      */
     public function postIndex()
     {
-        return Response::make("OK", 200);
-/*
         $user = $this->userRepo->signup(Input::all());
 
         if ($user->id) {
+            /*
             if (Config::get('confide::signup_email')) {
                 Mail::queueOn(
                     Config::get('confide::email_queue'),
@@ -62,17 +61,31 @@ class UserController extends BaseController {
                     }
                 );
             }
+            */
 
+            //return Response::make("OK", 200);
+            return Response::json(
+                array(
+                    'status' => 'success'
+                ),
+                200
+            );
+
+            /*
             return Redirect::to('user/login')
                 ->with('success', Lang::get('user/user.user_account_created'));
+            */
         } else {
             $error = $user->errors()->all(':message');
 
+            return Response::make($error, 400);
+
+            /*
             return Redirect::to('user/create')
                 ->withInput(Input::except('password'))
                 ->with('error', $error);
+            */
         }
-*/
     }
 
     /**
