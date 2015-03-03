@@ -15,25 +15,11 @@ MainApplication.getCurrentRoute = function(){
   return Backbone.history.fragment
 };
 
-/*
-MainApplication.StaticView = Marionette.ItemView.extend({
-    tagName: 'div',
-    id: 'HomeLayoutView',
-    className: 'contentLayout',
-    template: "#static-template"
-});
-*/
-
 MainApplication.on("start", function(){
     var mod = AppServer.module == null ? "homeModule" : AppServer.module;
     var modMain = "modules/" + mod;
     var modCommon = "modules/commonModule";
     var self = this;
-
-    /*
-    var staticView = new MainApplication.StaticView();
-    MainApplication.mainRegion.show(staticView);
-    */
 
     //Start up main module
     require([modMain, modCommon], function (modMain, modCommon) {
@@ -41,10 +27,4 @@ MainApplication.on("start", function(){
           Backbone.history.start();
       }
     });
-
-    /*
-    if(this.getCurrentRoute() === ""){
-        MainApplication.trigger("contacts:list");
-    }
-    */
 });

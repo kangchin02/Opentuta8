@@ -77,7 +77,7 @@
             <div class="auth-alert" role="alert">
                 <span class="auth-alert-message">This is a test!</span>
             </div>
-            <form id="auth_form_register" onsubmit="return false;">
+            <form id="login-form" onsubmit="return false;">
                 <div class="form-group"><input type="text" id="email" name="email" value="" placeholder="Email"></div>
                 <div class="form-group"><input type="password" id="password" name="password" value="" placeholder="Password"></div>
                 <a href="/auth/forgotpassword/" class="forgotpassword_link">I forgot my password</a>
@@ -118,7 +118,7 @@
             <div class="auth-alert" role="alert">
                 <span class="auth-alert-message">This is a test!</span>
             </div>
-            <form action="#" id="auth_form_register" name="auth_form_register">
+            <form id="signup-form" onsubmit="return false;">
                 <div style="display: inline-block;width:100%;" align="center">
                     <span style="display: inline-block;margin-right: 15px;">I am a ... </span>
                     <label style="display: inline-block;margin-right: 15px;"><input style="vertical-align: top;" name="sampleinlineradio" value="option1" type="radio" checked> Student</label>
@@ -129,7 +129,7 @@
                 <div class="form-group"><input type="text" name="email" id="email" value="" placeholder="Email"></div>
                 <div class="form-group"><input type="password" name="password" id="password" value="" placeholder="Password"></div>
                 <div class="no-feedback">
-                    <button class="btn btn-sm btn-primary btn-signup btn-embossed" style="width: 100%;">
+                    <button id="btn-signup-user" class="btn btn-sm btn-primary btn-signup btn-embossed" style="width: 100%;">
                         <span class="fui-facebook" style="display: none;margin-right: 20px;"><img src="assets/img/ajax-loader.gif" alt="checking"></span> Sign Up</button>
                 </div>
             </form>
@@ -157,6 +157,14 @@
         </div>
     </div>
 
+</div>
+
+<div id="container-alert" style="display: none;">
+    <div class="alert alert-success">
+        <button class="close" data-dismiss="alert">×</button>
+
+        Retrieving Topics...
+    </div>
 </div>
 
 </body>

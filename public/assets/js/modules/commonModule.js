@@ -43,8 +43,8 @@ MainApplication.module("CommonModule", function(CommonModule, MainApplication, B
 
         loginUser: function(event){
             var model = new Backbone.Model();
-            model.set({username:"test20",email:"test20@gmail.com",password:"password",password_confirmation:"password",csrf_token:AppServer.session});
-            model.url = "user";
+            model.set({email:"test20@gmail.com",password:"password2",csrf_token:AppServer.session});
+            model.url = "user/login";
             var promise = model.save();
             if (promise != null) {
                 //$$m.v.viewManager.showAlert("Deleting topic...");
@@ -72,13 +72,29 @@ MainApplication.module("CommonModule", function(CommonModule, MainApplication, B
         },
 
         events:{
-            'click #btn-login-user' : 'signupUser',
+            'click #btn-signup-user' : 'signupUser',
             'click #switch-login' : 'showLogin'
         },
 
         showLogin: function(event){
             $('#signup-modal').modal('hide');
             $('#login-modal').modal('show');
+        },
+
+        signupUser: function(event){
+            var model = new Backbone.Model();
+            model.set({username:"test20",email:"test20@gmail.com",password:"password",password_confirmation:"password",csrf_token:AppServer.session});
+            model.url = "user";
+            var promise = model.save();
+            if (promise != null) {
+                //$$m.v.viewManager.showAlert("Deleting topic...");
+                promise.done(function(resp){
+                    //$$m.v.viewManager.showAlert("Topic deleted Successfully!");
+                    console.log("success");
+                }).fail(function(resp){
+                    console.log("failed");
+                });
+            }
         },
 
         onRender: function(){
@@ -91,11 +107,5 @@ MainApplication.module("CommonModule", function(CommonModule, MainApplication, B
         var footerView = new CommonModule.HeaderView({el: $("#footer-region-content")});
         var loginView = new CommonModule.LoginView({el: $("#login-modal")});
         var signupView = new CommonModule.SignupView({el: $("#signup-modal")});
-        /*
-        MainApplication.headerRegion.attachView(headerView);
-        MainApplication.footerRegion.attachView(footerView);
-        MainApplication.loginRegion.attachView(loginView);
-        MainApplication.signupRegion.attachView(signupView);
-        */
      });
 });

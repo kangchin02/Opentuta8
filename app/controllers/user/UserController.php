@@ -64,12 +64,7 @@ class UserController extends BaseController {
             */
 
             //return Response::make("OK", 200);
-            return Response::json(
-                array(
-                    'status' => 'success'
-                ),
-                200
-            );
+            return Response::json(array('status' => 'success'),200);
 
             /*
             return Redirect::to('user/login')
@@ -78,7 +73,7 @@ class UserController extends BaseController {
         } else {
             $error = $user->errors()->all(':message');
 
-            return Response::make($error, 400);
+            return Response::json(array('status' => $error),400);
 
             /*
             return Redirect::to('user/create')
@@ -169,6 +164,34 @@ class UserController extends BaseController {
      *
      */
     public function postLogin()
+    {
+        $repo = App::make('UserRepository');
+        $input = Input::all();
+
+        if ($this->userRepo->login($input)) {
+            //return Redirect::intended('/');
+            return Response::json(array('status' => 'success'),200);
+        } else {
+            return Response::json(array('status' => 'error'),400);
+
+            /*
+            if ($this->userRepo->isThrottled($input)) {
+                $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
+            } elseif ($this->userRepo->existsButNotConfirmed($input)) {
+                $err_msg = Lang::get('confide::confide.alerts.not_confirmed');
+            } else {
+                $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
+            }
+
+            return Redirect::to('user/login')
+                ->withInput(Input::except('password'))
+                ->with('error', $err_msg);
+            */
+        }
+
+    }
+
+    public function postLoginOld()
     {
         $repo = App::make('UserRepository');
         $input = Input::all();
