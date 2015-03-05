@@ -66,6 +66,7 @@ class UserController extends BaseController {
             //return Response::make("OK", 200);
             return Response::json(array('status' => 'success'),200);
 
+
             /*
             return Redirect::to('user/login')
                 ->with('success', Lang::get('user/user.user_account_created'));
@@ -73,7 +74,9 @@ class UserController extends BaseController {
         } else {
             $error = $user->errors()->all(':message');
 
-            return Response::json(array('status' => $error),400);
+            //return Response::json(array('status' => $error),400);
+
+            return Response::json($user,400);
 
             /*
             return Redirect::to('user/create')
@@ -170,11 +173,10 @@ class UserController extends BaseController {
 
         if ($this->userRepo->login($input)) {
             //return Redirect::intended('/');
-            return Response::json(array('status' => 'success'),200);
+            $user = Auth::user();
+            return Response::json(array('username' => $user->username),200);
         } else {
-            return Response::json(array('status' => 'error'),400);
 
-            /*
             if ($this->userRepo->isThrottled($input)) {
                 $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
             } elseif ($this->userRepo->existsButNotConfirmed($input)) {
@@ -183,6 +185,9 @@ class UserController extends BaseController {
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
+            return Response::json(array('status' => $err_msg),400);
+
+            /*
             return Redirect::to('user/login')
                 ->withInput(Input::except('password'))
                 ->with('error', $err_msg);

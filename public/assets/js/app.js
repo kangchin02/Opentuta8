@@ -19,10 +19,9 @@ MainApplication.on("start", function(){
     var mod = AppServer.module == null ? "homeModule" : AppServer.module;
     var modMain = "modules/" + mod;
     var modCommon = "modules/commonModule";
-    var self = this;
 
     //Start up main module
-    require([modMain, modCommon], function (modMain, modCommon) {
+    require([modCommon, modMain], function (modCommon, modMain) {
       if(Backbone.history){
           Backbone.history.start();
       }

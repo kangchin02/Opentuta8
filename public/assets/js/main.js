@@ -17,7 +17,7 @@ require.config({
         'jquery'            :  "libs/jquery/jquery.min",
         'underscore'        : 'libs/lodash/lodash.min',
         'backbone'          : 'libs/backbone/backbone.min',
-        'backboneMarionette': 'libs/backbone.marionette/backbone.marionette.min',
+        'marionette'        : 'libs/backbone.marionette/backbone.marionette.min',
         'backboneAssoc'     : 'libs/backbone/backbone-associations.min',
         'backboneExtended'  : 'libs/backbone/backboneExtended',
         'bootstrap'         : 'libs/bootstrap/bootstrap.min',
@@ -80,7 +80,7 @@ require.config({
             exports: "Backbone"
         },
 
-        backboneMarionette: {
+        marionette: {
             deps: ["backbone"]
         },
 
@@ -173,13 +173,13 @@ require.config({
             deps: [
                 //"setup",
                 //"data",
-                //"handlebars",
+                "handlebars",
                 "json2",
                 "jquery",
                 "underscore",
                 "backbone",
-                "backboneMarionette",
-                //"backboneExtended",
+                "marionette",
+                "backboneExtended",
                 "bootstrap",
                 //"jqueryutil",
                 //"securitymanager",
@@ -192,7 +192,7 @@ require.config({
     enforceDefine: false
 });
 
-define(['app'],
+define(['app','utilsjs'],
     function (app) {
         $(document).ready(function(){
             MainApplication.start();
