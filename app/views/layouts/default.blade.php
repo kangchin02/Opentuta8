@@ -75,7 +75,7 @@
     <div class="modal-body">
         <div class="auth_inner_container">
             <div class="auth-alert" role="alert">
-                <span class="auth-alert-message">This is a test!</span>
+                <span class="auth-alert-message">Invalid email or password!</span>
             </div>
             <form id="login-form" onsubmit="return false;">
                 <div class="form-group"><input type="text" id="email" name="email" value="" placeholder="Email"></div>
@@ -83,7 +83,7 @@
                 <a href="/auth/forgotpassword/" class="forgotpassword_link">I forgot my password</a>
                 <div class="no-feedback">
                     <button  id="btn-login-user" class="btn btn-sm btn-primary btn-signup btn-embossed" style="width: 100%;margin-top: 5px;">
-                        <span class="fui-facebook" style="display: none;margin-right: 20px;"><img src="assets/img/ajax-loader.gif" alt="checking"></span> Login
+                        <span id="login-progress" class="fui-facebook" style="display: none;margin-right: 20px;"><img src="assets/img/ajax-loader.gif" alt="checking"></span> Login
                     </button>
                 </div>
             </form>
@@ -133,12 +133,6 @@
                         <span class="fui-facebook" style="display: none;margin-right: 20px;"><img src="assets/img/ajax-loader.gif" alt="checking"></span> Sign Up</button>
                 </div>
             </form>
-
-            <div class="fb_container" title="Facebook">
-                <div class="divider" style="margin-bottom:20px;"><span style="padding: 0px 10px;background: #fff;">or</span></div>
-                <button style="width: 100%;" class="btn btn-sm btn-primary btn-social-facebook btn-embossed"><i class="icon-facebook-sign"></i> Login with Facebook</button>
-                <button id="google-login-button" style="width:100%;margin-top: 5px;" class="btn btn-sm btn-primary btn-social-googleplus btn-embossed"><i class="icon-google-plus"></i> Login with Google</button>
-            </div>
 
             <div class="post-footer" align="center" style="margin-top: 10px;">
                 <small style="font-size: 60%;">

@@ -172,9 +172,9 @@ class UserController extends BaseController {
         $input = Input::all();
 
         if ($this->userRepo->login($input)) {
-            //return Redirect::intended('/');
             $user = Auth::user();
-            return Response::json(array('username' => $user->username),200);
+            return Response::json($user,200); // This returns the whole user object
+            //return Response::json(array('username' => $user->username),200);
         } else {
 
             if ($this->userRepo->isThrottled($input)) {
@@ -312,8 +312,8 @@ class UserController extends BaseController {
     public function getLogout()
     {
         Confide::logout();
-
-        return Redirect::to('/');
+        return Response::json("ok",200);
+        //return Redirect::to('/');
     }
 
     /**

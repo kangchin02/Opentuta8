@@ -5,7 +5,8 @@ define(['marionette'], function (Marionette) {
         },
 
         events: {
-            'click #btn-login' : 'showLogin'
+            'click #btn-login' : 'showLogin',
+            'click #btn-logout' : 'showLogout'
         },
 
         initialize : function(options){
@@ -19,7 +20,19 @@ define(['marionette'], function (Marionette) {
             $('#login-modal').modal('show');
         },
 
-        hideLoggedIn: function(event){
+        showLogout: function(event){
+            var self = this;
+            var promise = $.get("user/logout");
+            $.when(promise).done(function () {
+                self.showLoggedOut();
+            }).fail(function () {
+                //
+            }).always(function () {
+                //
+            });
+        },
+
+        showLoggedOut: function(event){
             $("#login-signup-container").show();
             $("#logged-in-container").hide();
         },
@@ -27,6 +40,8 @@ define(['marionette'], function (Marionette) {
         showLoggedIn: function(data){
             $("#login-signup-container").hide();
             $("#logged-in-container").show();
+
+            $("#btn-header-user").attr("title", data.username);
         }
     });
 

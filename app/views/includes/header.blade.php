@@ -2,7 +2,7 @@
     <div class="navbar-inner" style="padding-left:0px; padding-right:0px;">
         <div class="container" style="padding:9px 10px;width:100%;">
             <div class="pull-right">
-                <ul id="login-signup-container" class="inline nav nav-pills hidden-tablet hidden-phone">
+                <ul id="login-signup-container" class="inline nav nav-pills hidden-tablet hidden-phone" @if(Auth::check())style="display: none;"@endif>
                     <li class="li-nav-main nav-main dropdown" name="more">
                         <a id="btn-login">Login</a>
                     </li>
@@ -12,7 +12,8 @@
                     </li>
                 </ul>
 
-                <ul id="logged-in-container" class="inline nav nav-pills hidden-tablet hidden-phone"  style="display: none;">
+
+                <ul id="logged-in-container" class="inline nav nav-pills hidden-tablet hidden-phone"  @if(!Auth::check())style="display: none;"@endif>
                     <li class="li-nav-main nav-main dropdown" name="more" style="padding-top: 10px; padding-right: 15px;">
                         <i id="notifications-icon" class="icon-bell-alt" style="color: white;font-size: large;cursor: pointer;" title="Notifications"></i>
                     </li>
@@ -28,8 +29,8 @@
                     </li>
 
                     <li class="li-nav-main nav-main dropdown" name="more" style="margin-right: 15px;">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 0;margin-top: 5px;" title="Mike Lee">
-                            <img class="profile-pic" src="/assets/img/portrait.png" title="mike lee" style="width: 28px;height: 28px;border: 1px solid #ccc;border-radius: 5px;">
+                        <a id="btn-header-user" class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 0;margin-top: 5px;" title="@if(Auth::check()){{{ Auth::user()->username }}}@endif">
+                            <img class="profile-pic" src="/assets/img/portrait.png" style="width: 28px;height: 28px;border: 1px solid #ccc;border-radius: 5px;">
                             <b class="caret" style="margin-top: 15px;"> </b>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dlabel" style="right: 10px;">
@@ -70,7 +71,7 @@
                             <li class="separator"></li>
 
                             <li class="li-nav-main nav-main" name="downloads">
-                                <a href="/home#downloads" adminuserpostfix="/account/">
+                                <a id="btn-logout" href="javascript:void(0)">
                                     Logout
                                 </a>
                             </li>
@@ -84,7 +85,7 @@
 
             <div class="pull-left">
 
-                <a href="" class="pull-left" style="margin-top: 4px;margin-right: 15px;">
+                <a href="/home#home" class="pull-left" style="margin-top: 4px;margin-right: 15px;">
                     <img style="height:30px;" src="assets/img/opentuta.png">
                 </a>
 
@@ -101,22 +102,22 @@
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dlabel">
                             <li class="li-nav-main nav-main" name="account">
-                                <a href="/home#account" adminuserpostfix="/">
+                                <a href="/courses#k12">
                                     K-12
                                 </a>
                             </li>
                             <li class="li-nav-main nav-main" name="downloads">
-                                <a href="/home#downloads" adminuserpostfix="/account/">
+                                <a href="/courses#college" adminuserpostfix="/account/">
                                     College
                                 </a>
                             </li>
                             <li class="li-nav-main nav-main" name="downloads">
-                                <a href="/home#downloads" adminuserpostfix="/account/">
+                                <a href="/courses#pro" adminuserpostfix="/account/">
                                     Professional
                                 </a>
                             </li>
                             <li class="li-nav-main nav-main" name="downloads">
-                                <a href="/home#downloads" adminuserpostfix="/account/">
+                                <a href="/courses#create" adminuserpostfix="/account/">
                                     Create a course
                                 </a>
                             </li>
