@@ -125,12 +125,12 @@
                     <label style="display: inline-block;"><input style="vertical-align: top;" name="sampleinlineradio" value="option2" type="radio"> Parent</label>
                 </div>
 
-                <div class="form-group"><input type="text" name="fullname" id="fullname" value="" placeholder="Full Name"></div>
+                <div class="form-group"><input type="text" name="username" id="username" value="" placeholder="Full Name"></div>
                 <div class="form-group"><input type="text" name="email" id="email" value="" placeholder="Email"></div>
                 <div class="form-group"><input type="password" name="password" id="password" value="" placeholder="Password"></div>
                 <div class="no-feedback">
                     <button id="btn-signup-user" class="btn btn-sm btn-primary btn-signup btn-embossed" style="width: 100%;">
-                        <span class="fui-facebook" style="display: none;margin-right: 20px;"><img src="assets/img/ajax-loader.gif" alt="checking"></span> Sign Up</button>
+                        <span class="fui-facebook" style="display: none;margin-right: 20px;"><img id="signup-process" src="assets/img/ajax-loader.gif" alt="checking"></span> Sign Up</button>
                 </div>
             </form>
 

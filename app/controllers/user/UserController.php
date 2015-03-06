@@ -64,7 +64,7 @@ class UserController extends BaseController {
             */
 
             //return Response::make("OK", 200);
-            return Response::json(array('status' => 'success'),200);
+            return Response::json($user,200); // This returns the whole user object
 
 
             /*
@@ -76,7 +76,7 @@ class UserController extends BaseController {
 
             //return Response::json(array('status' => $error),400);
 
-            return Response::json($user,400);
+            return Response::json($error,400);
 
             /*
             return Redirect::to('user/create')
