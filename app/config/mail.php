@@ -1,6 +1,14 @@
 <?php
 
 return array(
+    /*
+    'driver' => 'smtp',
+    'host' => 'smtp.gmail.com',
+    'port' => 465,
+    'encryption' => 'ssl',
+    'username' => 'your-email@gmail.com',
+    'password' => 'your-password',
+    */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +36,8 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.postmarkapp.com',
+	//'host' => 'smtp.postmarkapp.com',
+    'host' => 'smtp.gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +50,8 @@ return array(
 	|
 	*/
 
-	'port' => 2525,
+	//'port' => 2525,
+    'port' => 465,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +64,8 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => null, 'name' => null),
+//	'from' => array('address' => null, 'name' => null),
+    'from' => array('address' => 'etutorstar@gmail.com', 'name' => "Opentuta Team"),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +78,8 @@ return array(
 	|
 	*/
 
-	'encryption' => 'tls',
+//	'encryption' => 'tls',
+    'encryption' => 'ssl',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +92,8 @@ return array(
 	|
 	*/
 
-	'username' => null,
+	//'username' => null,
+    'username' => 'etutorstar@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,6 +106,7 @@ return array(
 	|
 	*/
 
-	'password' => null,
+	//'password' => null,
+    'password' => '',
 
 );

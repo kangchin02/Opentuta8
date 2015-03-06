@@ -48,7 +48,6 @@ class UserController extends BaseController {
         $user = $this->userRepo->signup(Input::all());
 
         if ($user->id) {
-            /*
             if (Config::get('confide::signup_email')) {
                 Mail::queueOn(
                     Config::get('confide::email_queue'),
@@ -61,7 +60,6 @@ class UserController extends BaseController {
                     }
                 );
             }
-            */
 
             //return Response::make("OK", 200);
             return Response::json($user,200); // This returns the whole user object
@@ -72,6 +70,19 @@ class UserController extends BaseController {
                 ->with('success', Lang::get('user/user.user_account_created'));
             */
         } else {
+            if (Config::get('confide::signup_email')) {
+                Mail::queueOn(
+                    Config::get('confide::email_queue'),
+                    Config::get('confide::email_account_confirmation'),
+                    compact('user'),
+                    function ($message) use ($user) {
+                        $message
+                            ->to($user->email, $user->username)
+                            ->subject(Lang::get('confide::confide.email.account_confirmation.subject'));
+                    }
+                );
+            }
+
             $error = $user->errors()->all(':message');
 
             //return Response::json(array('status' => $error),400);

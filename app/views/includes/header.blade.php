@@ -160,6 +160,8 @@
 
             </div>
 
+
+            <div style="display: none;">
             <div class="pull-left hidden">
                 <input type="text" id="header-search" placeholder="Search for tutors by subject... (Try “Algebra”)" value="" class="ui-autocomplete-input" autocomplete="off">
             </div>
@@ -236,6 +238,8 @@ border-bottom-right-radius: 5px;
 border-top-right-radius: 5px;
 border-bottom-left-radius: 0px;
 border-top-left-radius: 0px;margin-top: 3px;" type="button">Go!</button>
+            </div>
+
             </div>
 
             <div class="clearfix"></div>
