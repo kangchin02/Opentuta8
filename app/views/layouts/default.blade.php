@@ -62,7 +62,9 @@
     @include('includes.footer')
 </footer>
 
-<!-- Modal -->
+<div id="fb-root" data-app_id="257696617667317"></div>
+
+<!-- Login Modal -->
 <div id="login-modal" class="modal-small hide slide" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-header">
         <span aria-hidden="true" data-dismiss="modal" style="float: right;cursor: pointer;">×</span>
@@ -80,7 +82,7 @@
             <form id="login-form" onsubmit="return false;">
                 <div class="form-group"><input type="text" id="email" name="email" value="" placeholder="Email"></div>
                 <div class="form-group"><input type="password" id="password" name="password" value="" placeholder="Password"></div>
-                <a href="/auth/forgotpassword/" class="forgotpassword_link">I forgot my password</a>
+                <a id="switch-password" href="javascript:void(0)" class="forgotpassword_link">I forgot my password</a>
                 <div class="no-feedback">
                     <button  id="btn-login-user" class="btn btn-sm btn-primary btn-signup btn-embossed" style="width: 100%;margin-top: 5px;">
                         <span id="login-progress" class="fui-facebook" style="display: none;margin-right: 20px;"><img src="assets/img/ajax-loader.gif" alt="checking"></span> Login
@@ -90,13 +92,14 @@
 
             <div class="fb_container" title="Facebook">
                 <div class="divider" style="margin-bottom:20px;"><span style="padding: 0px 10px;background: #fff;">or</span></div>
-                <button style="width: 100%;" class="btn btn-sm btn-primary btn-social-facebook btn-embossed"><i class="icon-facebook-sign"></i> Login with Facebook</button>
+                <button id="btn-facebook-login" style="width: 100%;" class="btn login-with-facebook signin btn-sm btn-primary btn-social-facebook btn-embossed"><i class="icon-facebook-sign"></i> Login with Facebook</button>
                 <button id="google-login-button" style="width:100%;margin-top: 5px;" class="btn btn-sm btn-primary btn-social-googleplus btn-embossed"><i class="icon-google-plus"></i> Login with Google</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Signup Modal -->
 <div id="signup-modal" class="modal-small hide slide" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-header">
         <span aria-hidden="true" data-dismiss="modal" style="float: right;cursor: pointer;">×</span>
@@ -151,6 +154,33 @@
         </div>
     </div>
 
+</div>
+
+<!-- Reset Password Modal -->
+<div id="password-modal" class="modal-small hide slide" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <span aria-hidden="true" data-dismiss="modal" style="float: right;cursor: pointer;">×</span>
+        <div class="auth_inner_header">
+            <h4 class="modal-title" style="float: left;">Forgot Password</h4>
+            <span id="switch-login" class="register_header_link" style="margin-top: 15px;float: left;border-bottom: 1px solid #fff;margin-left: 55px;cursor: pointer;">Login</span>
+        </div>
+    </div>
+
+    <div class="modal-body">
+        <div class="auth_inner_container">
+            <div class="auth-alert" role="alert">
+                <span class="auth-alert-message">Please enter a valid email.</span>
+            </div>
+            <form id="login-form" onsubmit="return false;">
+                <div class="form-group"><input type="text" id="email" name="email" value="" placeholder="Email"></div>
+               <div class="no-feedback">
+                    <button  id="btn-reset" class="btn btn-sm btn-primary btn-signup btn-embossed" style="width: 100%;margin-top: 5px;">
+                        Reset Password
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div id="container-alert" style="display: none;">

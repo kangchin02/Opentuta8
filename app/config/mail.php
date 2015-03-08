@@ -107,6 +107,6 @@ return array(
 	*/
 
 	//'password' => null,
-    'password' => '',
+    'password' => 'walnut99',
 
 );

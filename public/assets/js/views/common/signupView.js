@@ -1,5 +1,5 @@
 define(['marionette'], function (Marionette) {
-    signView = Marionette.LayoutView.extend({
+    view = Marionette.LayoutView.extend({
         regions: {
         },
 
@@ -51,6 +51,6 @@ define(['marionette'], function (Marionette) {
         }
     });
 
-    return signView;
+    return view;
 });
 

@@ -1,11 +1,12 @@
-define(['marionette'], function (Marionette) {
-    loginView = Marionette.LayoutView.extend({
+define(['marionette','utils/facebook'], function (Marionette) {
+    view = Marionette.LayoutView.extend({
         regions: {
         },
 
         events:{
             'click #btn-login-user' : 'loginUser',
-            'click #switch-signup' : 'showSignup'
+            'click #switch-signup' : 'showSignup',
+            'click #switch-password' : 'showPassword'
         },
 
         initialize : function(options){
@@ -50,10 +51,15 @@ define(['marionette'], function (Marionette) {
             $('#signup-modal').modal('show');
         },
 
+        showPassword: function(event){
+            $('#login-modal').modal('hide');
+            $('#password-modal').modal('show');
+        },
+
         onRender: function(){
         }
     });
 
-    return loginView;
+    return view;
 });
 

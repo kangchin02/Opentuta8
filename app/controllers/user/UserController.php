@@ -48,6 +48,7 @@ class UserController extends BaseController {
         $user = $this->userRepo->signup(Input::all());
 
         if ($user->id) {
+            /*
             if (Config::get('confide::signup_email')) {
                 Mail::queueOn(
                     Config::get('confide::email_queue'),
@@ -60,6 +61,7 @@ class UserController extends BaseController {
                     }
                 );
             }
+            */
 
             //return Response::make("OK", 200);
             return Response::json($user,200); // This returns the whole user object
@@ -70,6 +72,7 @@ class UserController extends BaseController {
                 ->with('success', Lang::get('user/user.user_account_created'));
             */
         } else {
+            /*
             if (Config::get('confide::signup_email')) {
                 Mail::queueOn(
                     Config::get('confide::email_queue'),
@@ -82,6 +85,7 @@ class UserController extends BaseController {
                     }
                 );
             }
+            */
 
             $error = $user->errors()->all(':message');
 
@@ -266,14 +270,19 @@ class UserController extends BaseController {
     public function postForgotPassword()
     {
         if (Confide::forgotPassword(Input::get('email'))) {
+            return Response::json('ok',200);
+
+            /*
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
-            return Redirect::to('user/forgot')
-                ->with('notice', $notice_msg);
+            return Redirect::to('user/forgot')->with('notice', $notice_msg);
+            */
         } else {
+            return Response::json('invalid email',400);
+
+            /*
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
-            return Redirect::to('user/login')
-                ->withInput()
-                ->with('error', $error_msg);
+            return Redirect::to('user/login')->withInput()->with('error', $error_msg);
+            */
         }
     }
 
