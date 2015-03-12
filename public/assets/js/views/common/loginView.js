@@ -6,7 +6,8 @@ define(['marionette','utils/facebook'], function (Marionette) {
         events:{
             'click #btn-login-user' : 'loginUser',
             'click #switch-signup' : 'showSignup',
-            'click #switch-password' : 'showPassword'
+            'click #switch-password' : 'showPassword',
+            'click .btn-social-facebook' : 'showFBLogin'
         },
 
         initialize : function(options){
@@ -56,7 +57,43 @@ define(['marionette','utils/facebook'], function (Marionette) {
             $('#password-modal').modal('show');
         },
 
-        onRender: function(){
+        showFBLogin: function(event){
+            var self = this;
+            FB.getLoginStatus(function(response) {
+                if (response.authResponse) {
+                    self.loginFBUser(response.authResponse);
+                }
+                else {
+                    FB.login(function(response) {
+                        if (!response.authResponse) {
+                            // user has not auth'd your app, or is not logged into Facebook
+                            return;
+                        }
+                        else{
+                            self.loginFBUser(response.authResponse);
+                        }
+                    }, {scope: 'email,user_birthday,user_education_history'});
+                }
+            });
+        },
+
+        loginFBUser: function(authResponse){
+            var model = new Backbone.Model();
+            model.set({response:authResponse,csrf_token:AppServer.session});
+            model.url = "user/login/facebook";
+            var promise = model.save();
+            if (promise != null) {
+                $("#login-progress").show();
+                promise.done(function(resp){
+                    $("#login-progress").hide();
+                    $('#login-modal').modal('hide');
+                    Backbone.trigger('showLoggedIn', resp);
+                }).fail(function(resp){
+                    $("#login-progress").hide();
+                    $(".auth-alert").show();
+                });
+            }
+            console.log("logged in");
         }
     });
 
