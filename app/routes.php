@@ -56,6 +56,9 @@ Route::post('user/{user}/edit', 'UserController@postEdit');
 //:: User Account Routes ::
 Route::post('user/login', 'UserController@postLogin');
 
+//:: User Account Routes Facebook
+Route::post('user/login/facebook', 'UserController@postLoginFacebook');
+
 # User RESTful Routes (Login, Logout, Register, etc)
 Route::controller('user', 'UserController');
 

@@ -287,6 +287,31 @@ class UserController extends BaseController {
     }
 
     /**
+     * Attempt to login with facebook token
+     *
+     */
+    public function postLoginFacebook()
+    {
+        $response = Input::get('response');
+        $facebook = new Facebook(Config::get('facebook'));
+        $facebookUser = $facebook->getUser();
+        if ($facebookUser) {
+            try {
+                $user_profile = $facebook->api('/me?access_token='.$response['accessToken']);
+            }
+            catch (Exception $e) {
+                echo $e->getMessage();
+                exit();
+            }
+            $facebookUserId  = $facebookUser;
+            $facebookUserEmail = $user_profile["email"];
+            $facebookUserName = $user_profile["first_name"];
+            $facebookUserImage = "https://graph.facebook.com/".$facebookUserId."/picture?type=large";
+            /* Save the user details in your db here */
+        }
+    }
+
+    /**
      * Shows the change password form with the given token
      *
      */
