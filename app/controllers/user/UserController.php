@@ -1,5 +1,11 @@
 <?php
 
+use Facebook\FacebookSession;
+use Facebook\FacebookRequest;
+use Facebook\GraphUser;
+use Facebook\FacebookRequestException;
+use Facebook\FacebookRedirectLoginHelper;
+
 class UserController extends BaseController {
 
     /**
@@ -293,21 +299,25 @@ class UserController extends BaseController {
     public function postLoginFacebook()
     {
         $response = Input::get('response');
-        $facebook = new Facebook(Config::get('facebook'));
-        $facebookUser = $facebook->getUser();
-        if ($facebookUser) {
+        $config = Config::get('facebook');
+
+        if ($response && $config) {
             try {
-                $user_profile = $facebook->api('/me?access_token='.$response['accessToken']);
+                FacebookSession::setDefaultApplication($config['appId'], $config['secret']);
+                $session = new FacebookSession($response['accessToken']);
+                $request = new FacebookRequest($session, 'GET', '/me');
+                $response = $request->execute();
+                $userInfo = $response->getGraphObject()->asArray();;
             }
             catch (Exception $e) {
                 echo $e->getMessage();
                 exit();
             }
-            $facebookUserId  = $facebookUser;
-            $facebookUserEmail = $user_profile["email"];
-            $facebookUserName = $user_profile["first_name"];
+
+            $facebookUserId  = $userInfo['id'];
+            $facebookUserEmail = $userInfo["email"];
+            $facebookUserName = $userInfo["first_name"].' '.$userInfo['last_name'];
             $facebookUserImage = "https://graph.facebook.com/".$facebookUserId."/picture?type=large";
-            /* Save the user details in your db here */
         }
     }
 

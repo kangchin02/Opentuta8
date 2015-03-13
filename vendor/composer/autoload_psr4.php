@@ -9,5 +9,6 @@ return array(
     'Zizaco\\Entrust\\' => array($vendorDir . '/zizaco/entrust/src/Entrust'),
     'Zizaco\\Confide\\' => array($vendorDir . '/zizaco/confide/src/Confide'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'Facebook\\' => array($vendorDir . '/facebook/php-sdk-v4/src/Facebook'),
     'Barryvdh\\LaravelIdeHelper\\' => array($vendorDir . '/barryvdh/laravel-ide-helper/src'),
 );
