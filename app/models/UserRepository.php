@@ -24,13 +24,15 @@ class UserRepository
 	 *
 	 * @return  User User object that may or may not be saved successfully. Check the id to make sure.
 	 */
-	public function signup($input)
+	public function signup($input, $confirmed=false)
 	{
 		$user = new User;
 
 		$user->username = array_get($input, 'username');
 		$user->email    = array_get($input, 'email');
 		$user->password = array_get($input, 'password');
+        $user->facebook_uid = array_get($input, 'facebook_uid');
+        $user->confirmed = $confirmed;
 
 		// The password confirmation will be removed from model
 		// before saving. This field will be used in Ardent's
@@ -63,7 +65,44 @@ class UserRepository
 		return Confide::logAttempt($input, Config::get('confide::signup_confirm'));
 	}
 
-	/**
+    /**
+     * Attempts to login with the given credentials.
+     *
+     * @param  array $input Array containing the credentials (email/username and password)
+     *
+     * @return  boolean Success?
+     */
+    public function loginFacebook($input)
+    {
+        //return Confide::logAttempt($input, Config::get('confide::signup_confirm'));
+
+        /*
+        if (!$this->loginThrottling($emailOrUsername)) {
+            return false;
+        }
+        */
+
+        //$remember = Confide::extractRememberFromArray($input);
+        //$emailOrUsername = Confide::extractIdentityFromArray($input);
+        $user = Confide::getUserByEmailOrUsername($input);
+
+        if ($user) {
+            //$this->app['auth']->login($user, true);
+            Auth::login($user, true);
+            return true;
+        }
+        else{
+            $user = $this->signup($input, true);
+            if($user->id){
+                Auth::login($user, true);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
 	 * Checks if the credentials has been throttled by too
 	 * much failed login attempts
 	 *

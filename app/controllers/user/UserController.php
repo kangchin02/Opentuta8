@@ -310,14 +310,36 @@ class UserController extends BaseController {
                 $userInfo = $response->getGraphObject()->asArray();;
             }
             catch (Exception $e) {
-                echo $e->getMessage();
-                exit();
+                $err_msg = $e->getMessage();
+                return Response::json(array('status' => $err_msg),400);
             }
 
             $facebookUserId  = $userInfo['id'];
             $facebookUserEmail = $userInfo["email"];
             $facebookUserName = $userInfo["first_name"].' '.$userInfo['last_name'];
             $facebookUserImage = "https://graph.facebook.com/".$facebookUserId."/picture?type=large";
+
+            $input = Input::all();
+            $input['email'] = $facebookUserEmail;
+            $input['username'] = $facebookUserName;
+            $input['password'] = substr(md5(rand()),0,10);
+            $input['facebook_uid'] = $facebookUserId;
+            if ($this->userRepo->loginFacebook($input)) {
+                $user = Auth::user();
+                return Response::json($user,200); // This returns the whole user object
+            } else {
+
+                if ($this->userRepo->isThrottled($input)) {
+                    $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
+                } elseif ($this->userRepo->existsButNotConfirmed($input)) {
+                    $err_msg = Lang::get('confide::confide.alerts.not_confirmed');
+                } else {
+                    $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
+                }
+
+                return Response::json(array('status' => $err_msg),400);
+            }
+
         }
     }
 
