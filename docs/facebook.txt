@@ -1,0 +1,4 @@
+Add facebook library using composer:
+
+composer require facebook/php-sdk
+composer require facebook/php-sdk-v4
