@@ -57,7 +57,8 @@ require.config({
         'requireLib'        : 'libs/require/require',
         'dateformat'        : 'libs/date.format',
         'handlebarshelpers' : 'utils/HandlebarsHelpers',
-        'headerview'        : 'views/HeaderView'
+        'headerview'        : 'views/HeaderView',
+        'googleplus'        : 'https://apis.google.com/js/client:platform'
     },
 
     map:  {
@@ -73,6 +74,10 @@ require.config({
 
         underscore: {
             exports: "_"
+        },
+
+        googleplus: {
+            exports: "googleplus"
         },
 
         backbone: {
