@@ -8,6 +8,7 @@
 /app/config/staging
 /app/config/production
 /app/config/facebook.php
+/app/config/google1.php
 
 # Composer
 composer.phar
