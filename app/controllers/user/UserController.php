@@ -6,6 +6,7 @@ use Facebook\GraphUser;
 use Facebook\FacebookRequestException;
 use Facebook\FacebookRedirectLoginHelper;
 
+
 class UserController extends BaseController {
 
     /**
@@ -339,8 +340,93 @@ class UserController extends BaseController {
 
                 return Response::json(array('status' => $err_msg),400);
             }
-
         }
+    }
+
+    /**
+     * Attempt to login with facebook token
+     *
+     */
+    public function postLoginGoogle()
+    {
+        $response = Input::get('response');
+        $config = Config::get('google');
+
+        if ($response && $config) {
+            $client = new Google_Client();
+            $client->setClientId($config['clientId']);
+            $client->setClientSecret($config['secret']);
+            $client->setRedirectUri("postmessage");
+            $client->addScope("https://www.googleapis.com/auth/plus.login");
+            $client->addScope("email");
+
+            $client->authenticate($response['code']);
+            $accessToken = $client->getAccessToken();
+
+            $client->setAccessToken($accessToken);
+            $PlusService = new Google_Service_Plus($client);
+            $me = $PlusService->people->get('me');
+            $PlusPersonEMails = $me->getEmails();
+            foreach($PlusPersonEMails as $em) {
+                if($em->type == "account") {
+                    $user_email = $em->value;
+                }
+            }
+        }
+
+        return Response::json(array('status' => "error"),400);
+    }
+
+    public function postLoginGoogle1()
+    {
+        $response = Input::get('response');
+        $config = Config::get('google');
+
+        if ($response && $config) {
+            $client = new Google_Client();
+            $client->setClientId($config['clientId']);
+            $client->setClientSecret($config['secret']);
+            $client->setRedirectUri("postmessage");
+            $client->addScope("https://www.googleapis.com/auth/plus.login");
+            $client->addScope("https://www.googleapis.com/plus/v1/people/me");
+            $client->addScope("email");
+            /*
+            $client->setAccessToken(json_encode($response));
+            */
+
+            if($client->isAccessTokenExpired()) {
+                $client->authenticate($response['code']);
+//                $NewAccessToken = json_decode($client->getAccessToken());
+//                $client->refreshToken($NewAccessToken->refresh_token);
+
+            }
+
+            $tokenData = $client->verifyIdToken()->getAttributes();
+
+            //$ticket = $client->verifyIdToken($token);
+            if ($tokenData) {
+                //$data = $tokenData->getAttributes();
+                $uid = $tokenData['payload']['sub']; // user ID
+
+                $PlusService = new Google_Service_Plus($client);
+                $me = new Google_Service_Plus_Person();
+                $me = $PlusService->people->get('me');
+
+                $PlusPersonEMails = new Google_Service_Plus_PersonEmails();
+                $PlusPersonEMails = $me->getEmails();
+                foreach($PlusPersonEMails as $em) {
+                    if($em->type == "account") {
+                        $user_email = $em->value;
+                    }
+                }
+            }
+   //         $oauth2 = new Google_Auth_OAuth2($client);
+   //         $userInfo = $oauth2->userinfo->get();
+        }
+
+
+
+        return Response::json(array('status' => "error"),400);
     }
 
     /**

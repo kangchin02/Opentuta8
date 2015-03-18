@@ -59,6 +59,9 @@ Route::post('user/login', 'UserController@postLogin');
 //:: User Account Routes Facebook
 Route::post('user/login/facebook', 'UserController@postLoginFacebook');
 
+//:: User Account Routes Google
+Route::post('user/login/google', 'UserController@postLoginGoogle');
+
 # User RESTful Routes (Login, Logout, Register, etc)
 Route::controller('user', 'UserController');
 

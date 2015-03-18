@@ -8,7 +8,7 @@ define(['marionette','utils/facebook','googleplus'], function (Marionette) {
             'click #switch-signup' : 'showSignup',
             'click #switch-password' : 'showPassword',
             'click .btn-social-facebook' : 'showFBLogin',
-            'click #google-login-button' : 'showGoggleLogin'
+            'click #google-login-button' : 'showGoogleLogin'
         },
 
         initialize : function(options){
@@ -94,24 +94,59 @@ define(['marionette','utils/facebook','googleplus'], function (Marionette) {
                     $(".auth-alert").show();
                 });
             }
-            console.log("logged in");
+            console.log("Facebook logged in");
         },
 
-        showGoggleLogin: function(event){
+        showGoogleLogin: function(event){
             var options = {
                 'callback' : this.loginGoogle,
                 'approvalprompt' : 'force',
                 'clientid' : '409449806602-ptfo1q2r523g7942an0toso95i4lirck.apps.googleusercontent.com',
                 'requestvisibleactions' : 'http://schema.org/CommentAction http://schema.org/ReviewAction',
-                'cookiepolicy' : 'single_host_origin'
+                'cookiepolicy' : 'single_host_origin',
+                'scope': 'https://www.googleapis.com/auth/plus.login email'
             };
             gapi.auth.signIn(options);
         },
 
         loginGoogle: function(authResult){
             if (authResult['status']['signed_in']) {
-                // Update the app to reflect a signed in user
-                // Hide the sign-in button now that the user is authorized, for example:
+                var model = new Backbone.Model();
+                var resp ={
+                    'access_token' : authResult.access_token,
+                    'authuser' : authResult.authuser,
+                    'session_state' : authResult.session_state,
+                    'code' : authResult.code,
+                    'id_token' : authResult.id_token,
+                    'expires_at' : authResult.expires_at,
+                    'expires_in' : authResult.expires_in,
+                    'issued_at' : authResult.issued_at,
+                    'token_type' : authResult.token_type
+                };
+
+                /*
+                delete authResult.scope;
+                delete authResult.status;
+                delete authResult.cookie_policy;
+                delete authResult.g_user_cookie_policy;
+                */
+
+                //delete authResult.g-oauth-window;
+
+                model.set({response:resp, csrf_token:AppServer.session});
+                model.url = "user/login/google";
+                var promise = model.save();
+                if (promise != null) {
+                    $("#login-progress").show();
+                    promise.done(function(resp){
+                        $("#login-progress").hide();
+                        $('#login-modal').modal('hide');
+                        Backbone.trigger('showLoggedIn', resp);
+                    }).fail(function(resp){
+                        $("#login-progress").hide();
+                        $(".auth-alert").show();
+                    });
+                }
                 console.log('Google logged in: ');
             } else {
                 // Update the app to reflect a signed out user
