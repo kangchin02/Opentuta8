@@ -29,6 +29,7 @@ return array(
     'Symfony\\Component\\BrowserKit\\' => array($vendorDir . '/symfony/browser-kit'),
     'Stack' => array($vendorDir . '/stack/builder/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
+    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Predis' => array($vendorDir . '/predis/predis/lib'),
     'Patchwork' => array($vendorDir . '/patchwork/utf8/class'),
     'PHPParser' => array($vendorDir . '/nikic/php-parser/lib'),

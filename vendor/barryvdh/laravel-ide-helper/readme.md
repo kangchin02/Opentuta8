@@ -1,6 +1,8 @@
 ## Laravel IDE Helper Generator
 [![Latest Stable Version](https://poser.pugx.org/barryvdh/laravel-ide-helper/version.png)](https://packagist.org/packages/barryvdh/laravel-ide-helper) [![Total Downloads](https://poser.pugx.org/barryvdh/laravel-ide-helper/d/total.png)](https://packagist.org/packages/barryvdh/laravel-ide-helper)
 
+### For Laravel 5, check the [2.0 branch](https://github.com/barryvdh/laravel-ide-helper)
+
 ### Complete phpDocs, directly from the source
 
 _Checkout [this Laracasts video](https://laracasts.com/series/how-to-be-awesome-in-phpstorm/episodes/15) for a quick introduction/explanation!_
@@ -14,9 +16,9 @@ Note: You do need CodeIntel for Sublime Text: https://github.com/SublimeCodeInte
 
 ### Automatic phpDoc generation for Laravel Facades
 
-Require this package in your composer.json and run composer update (or run `composer require barryvdh/laravel-ide-helper:1.*` directly):
+Require this package with composer using the following command:
 
-    "barryvdh/laravel-ide-helper": "1.*"
+    composer require barryvdh/laravel-ide-helper
 
 After updating composer, add the ServiceProvider to the providers array in app/config/app.php
 
@@ -34,7 +36,7 @@ You can configure your composer.json to do this after each commit:
         "post-update-cmd":[
             "php artisan clear-compiled",
             "php artisan ide-helper:generate",
-            "php artisan optimize",
+            "php artisan optimize"
         ]
     },
 

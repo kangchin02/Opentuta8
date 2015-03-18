@@ -150,8 +150,6 @@ class ModelsCommand extends Command
             if (in_array($name, $ignore)) {
                 $this->comment("Ignoring model '$name'");
                 continue;
-            } else {
-                $this->comment("Loading model '$name'");
             }
             $this->properties = array();
             $this->methods = array();
@@ -159,33 +157,35 @@ class ModelsCommand extends Command
                 try {
                     // handle abstract classes, interfaces, ...
                     $reflectionClass = new \ReflectionClass($name);
-                    if (!$reflectionClass->IsInstantiable()) {
-                        throw new \Exception($name . ' is not instanciable.');
-                    } elseif (!$reflectionClass->isSubclassOf('Illuminate\Database\Eloquent\Model')) {
-                        $this->comment("Class '$name' is not a model");
+
+                    if (!$reflectionClass->isSubclassOf('Illuminate\Database\Eloquent\Model')) {
                         continue;
                     }
 
-                    $model = new $name();
+                    $this->comment("Loading model '$name'");
+
+                    if (!$reflectionClass->IsInstantiable()) {
+                        throw new \Exception($name . ' is not instantiable.');
+                    }
+
+                    $model = $this->laravel->make($name);
+
                     if ($hasDoctrine) {
                         $this->getPropertiesFromTable($model);
                     }
+
                     $this->getPropertiesFromMethods($model);
                     $output .= $this->createPhpDocs($name);
                 } catch (\Exception $e) {
                     $this->error("Exception: " . $e->getMessage() . "\nCould not analyze class $name.");
                 }
-            } elseif (interface_exists($name) || (function_exists('trait_exists') && trait_exists($name))) {
-                $this->info("Skipping interface/trait $name");
-            } else {
-                $this->error("Class $name does not exist");
             }
 
         }
 
         if (!$hasDoctrine) {
             $this->error(
-                "Warning: 'doctrine/dbal: ~2.3' is required to load database information. Please require that in your composer.json and run 'composer update'."
+                'Warning: `"doctrine/dbal": "~2.3"` is required to load database information. Please require that in your composer.json and run `composer update`.'
             );
         }
 
@@ -256,8 +256,8 @@ class ModelsCommand extends Command
                     }
                 }
 
-
-                $this->setProperty($name, $type, true, true);
+                $comment = $column->getComment();
+                $this->setProperty($name, $type, true, true, $comment);
                 $this->setMethod(
                     Str::camel("where_" . $name),
                     '\Illuminate\Database\Query\Builder|\\' . get_class($model),
@@ -333,9 +333,9 @@ class ModelsCommand extends Command
                         $search = '$this->' . $relation . '(';
                         if ($pos = stripos($code, $search)) {
                             $code = substr($code, $pos + strlen($search));
-                            $arguments = explode(',', substr($code, 0, stripos($code, ')')));
+                            $arguments = explode(',', substr($code, 0, strpos($code, ');')));
                             //Remove quotes, ensure 1 \ in front of the model
-                            $returnModel = "\\" . ltrim(trim($arguments[0], " \"'"), "\\");
+                            $returnModel = $this->getClassName($arguments[0], $model);
                             if ($relation === "belongsToMany" or $relation === 'hasMany' or $relation === 'morphMany' or $relation === 'morphToMany') {
                                 //Collection or array of models (because Collection is Arrayable)
                                 $this->setProperty(
@@ -361,14 +361,16 @@ class ModelsCommand extends Command
      * @param string|null $type
      * @param bool|null $read
      * @param bool|null $write
+     * @param string|null $comment
      */
-    protected function setProperty($name, $type = null, $read = null, $write = null)
+    protected function setProperty($name, $type = null, $read = null, $write = null, $comment='')
     {
         if (!isset($this->properties[$name])) {
             $this->properties[$name] = array();
             $this->properties[$name]['type'] = 'mixed';
             $this->properties[$name]['read'] = false;
             $this->properties[$name]['write'] = false;
+            $this->properties[$name]['comment'] = (string) $comment;
         }
         if ($type !== null) {
             $this->properties[$name]['type'] = $type;
@@ -435,7 +437,7 @@ class ModelsCommand extends Command
             } else {
                 $attr = 'property-read';
             }
-            $tag = Tag::createInstance("@{$attr} {$property['type']} {$name}", $phpdoc);
+            $tag = Tag::createInstance("@{$attr} {$property['type']} {$name} {$property['comment']}", $phpdoc);
             $phpdoc->appendTag($tag);
         }
 
@@ -444,7 +446,7 @@ class ModelsCommand extends Command
                 continue;
             }
             $arguments = implode(', ', $method['arguments']);
-            $tag = Tag::createInstance("@method static {$method['type']} {$name}({$arguments}) ", $phpdoc);
+            $tag = Tag::createInstance("@method static {$method['type']} {$name}({$arguments})", $phpdoc);
             $phpdoc->appendTag($tag);
         }
 
@@ -509,4 +511,24 @@ class ModelsCommand extends Command
         return $paramsWithDefault;
     }
 
+    /**
+     * @param string $className
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return string
+     */
+    private function getClassName($className, $model)
+    {
+        // If the class name was resolved via get_class($this) or static::class
+        if (strpos($className, 'get_class($this)') !== false || strpos($className, 'static::class') !== false) {
+            return get_class($model);
+        }
+
+        // If the class name was resolved via ::class (PHP 5.5+)
+        if (strpos($className, '::class') !== false) {
+            $end = -1 * strlen('::class');
+            return substr($className, 0, $end);
+        }
+
+        return "\\" . ltrim(trim($className, " \"'"), "\\") ;
+    }
 }
