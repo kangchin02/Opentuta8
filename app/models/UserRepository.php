@@ -94,6 +94,7 @@ class UserRepository
         else{
             $user = $this->signup($input, true);
             if($user->id){
+                // Signup successful since we get an id back
                 Auth::login($user, true);
                 return true;
             }

@@ -114,25 +114,8 @@ define(['marionette','utils/facebook','googleplus'], function (Marionette) {
                 var model = new Backbone.Model();
                 var resp ={
                     'access_token' : authResult.access_token,
-                    'authuser' : authResult.authuser,
-                    'session_state' : authResult.session_state,
-                    'code' : authResult.code,
-                    'id_token' : authResult.id_token,
-                    'expires_at' : authResult.expires_at,
-                    'expires_in' : authResult.expires_in,
-                    'issued_at' : authResult.issued_at,
-                    'token_type' : authResult.token_type
+                    'code' : authResult.code
                 };
-
-                /*
-                delete authResult.scope;
-                delete authResult.status;
-                delete authResult.cookie_policy;
-                delete authResult.g_user_cookie_policy;
-                */
-
-                //delete authResult.g-oauth-window;
-
                 model.set({response:resp, csrf_token:AppServer.session});
                 model.url = "user/login/google";
                 var promise = model.save();
