@@ -32,6 +32,7 @@ class UserRepository
 		$user->email    = array_get($input, 'email');
 		$user->password = array_get($input, 'password');
         $user->facebook_uid = array_get($input, 'facebook_uid');
+        $user->google_uid = array_get($input, 'google_uid');
         $user->confirmed = $confirmed;
 
 		// The password confirmation will be removed from model
@@ -72,7 +73,7 @@ class UserRepository
      *
      * @return  boolean Success?
      */
-    public function loginFacebook($input)
+    public function loginSocial($input)
     {
         //return Confide::logAttempt($input, Config::get('confide::signup_confirm'));
 

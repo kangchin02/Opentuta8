@@ -315,36 +315,21 @@ class UserController extends BaseController {
                 return Response::json(array('status' => $err_msg),400);
             }
 
-            $facebookUserId  = $userInfo['id'];
-            $facebookUserEmail = $userInfo["email"];
-            $facebookUserName = $userInfo["first_name"].' '.$userInfo['last_name'];
-            $facebookUserImage = "https://graph.facebook.com/".$facebookUserId."/picture?type=large";
-
             $input = Input::all();
-            $input['email'] = $facebookUserEmail;
-            $input['username'] = $facebookUserName;
+            $input['email'] = $userInfo["email"];
+            $input['username'] = $userInfo["first_name"].' '.$userInfo['last_name'];
             $input['password'] = substr(md5(rand()),0,10);
-            $input['facebook_uid'] = $facebookUserId;
-            if ($this->userRepo->loginFacebook($input)) {
-                $user = Auth::user();
-                return Response::json($user,200); // This returns the whole user object
-            } else {
+            $input['facebook_uid']  = $userInfo['id'];
+            $input['avatar']  = "https://graph.facebook.com/".$input['facebook_uid']."/picture?type=large";
 
-                if ($this->userRepo->isThrottled($input)) {
-                    $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
-                } elseif ($this->userRepo->existsButNotConfirmed($input)) {
-                    $err_msg = Lang::get('confide::confide.alerts.not_confirmed');
-                } else {
-                    $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
-                }
-
-                return Response::json(array('status' => $err_msg),400);
-            }
+            return $this->loginSocialUser($input);
         }
+
+        return Response::json(array('status' => "error"),400);
     }
 
     /**
-     * Attempt to login with facebook token
+     * Attempt to login with google token
      *
      */
     public function postLoginGoogle()
@@ -367,14 +352,43 @@ class UserController extends BaseController {
             $PlusService = new Google_Service_Plus($client);
             $me = $PlusService->people->get('me');
             $PlusPersonEMails = $me->getEmails();
+            $me->getDisplayName();
             foreach($PlusPersonEMails as $em) {
                 if($em->type == "account") {
                     $user_email = $em->value;
                 }
             }
+
+            $input = Input::all();
+            $input['email'] = $user_email;
+            $input['username'] = $me['displayName'];
+            $input['password'] = substr(md5(rand()),0,10);
+            $input['google_uid']  = $me['id'];
+            $input['avatar']  = $me['image']['url'];
+
+            return $this->loginSocialUser($input);
         }
 
         return Response::json(array('status' => "error"),400);
+    }
+
+    public function loginSocialUser($input)
+    {
+        if ($this->userRepo->loginSocial($input)) {
+            $user = Auth::user();
+            return Response::json($user,200); // This returns the whole user object
+        } else {
+
+            if ($this->userRepo->isThrottled($input)) {
+                $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
+            } elseif ($this->userRepo->existsButNotConfirmed($input)) {
+                $err_msg = Lang::get('confide::confide.alerts.not_confirmed');
+            } else {
+                $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
+            }
+
+            return Response::json(array('status' => $err_msg),400);
+        }
     }
 
     public function postLoginGoogle1()
