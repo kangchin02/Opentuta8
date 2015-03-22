@@ -1,6 +1,8 @@
 # Laravel
 /bootstrap/compiled.php
+/backup
 #/vendor
+
 
 # Configuration
 /app/config/database.php
