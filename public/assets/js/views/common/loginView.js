@@ -98,39 +98,44 @@ define(['marionette','utils/facebook','googleplus'], function (Marionette) {
         },
 
         showGoogleLogin: function(event){
+            gapi.client.load('plus', 'v1',function(){});
             var options = {
-                'callback' : this.loginGoogle,
                 'approvalprompt' : 'force',
-                'clientid' : '409449806602-ptfo1q2r523g7942an0toso95i4lirck.apps.googleusercontent.com',
-                'requestvisibleactions' : 'http://schema.org/CommentAction http://schema.org/ReviewAction',
+                'callback' : this.loginGoogle,
                 'cookiepolicy' : 'single_host_origin',
-                'scope': 'https://www.googleapis.com/auth/plus.login email'
+                'clientid' : '409449806602-ptfo1q2r523g7942an0toso95i4lirck.apps.googleusercontent.com',
+                'scope' : 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read'
             };
             gapi.auth.signIn(options);
         },
 
         loginGoogle: function(authResult){
             if (authResult['status']['signed_in']) {
-                var model = new Backbone.Model();
-                var resp ={
-                    'access_token' : authResult.access_token,
-                    'code' : authResult.code
-                };
-                model.set({response:resp, csrf_token:AppServer.session});
-                model.url = "user/login/google";
-                var promise = model.save();
-                if (promise != null) {
-                    $("#login-progress").show();
-                    promise.done(function(resp){
-                        $("#login-progress").hide();
-                        $('#login-modal').modal('hide');
-                        Backbone.trigger('showLoggedIn', resp);
-                    }).fail(function(resp){
-                        $("#login-progress").hide();
-                        $(".auth-alert").show();
-                    });
-                }
-                console.log('Google logged in: ');
+                var request = gapi.client.plus.people.get({'userId': 'me'});
+                request.execute(function (resp)
+                {
+                    var model = new Backbone.Model();
+                    var data ={
+                        'access_token' : authResult.access_token,
+                        'id' : resp.id,
+                        'code' : authResult.code
+                    };
+                    model.set({response:data, csrf_token:AppServer.session});
+                    model.url = "user/login/google";
+                    var promise = model.save();
+                    if (promise != null) {
+                        $("#login-progress").show();
+                        promise.done(function(resp){
+                            $("#login-progress").hide();
+                            $('#login-modal').modal('hide');
+                            Backbone.trigger('showLoggedIn', resp);
+                        }).fail(function(resp){
+                            $("#login-progress").hide();
+                            $(".auth-alert").show();
+                        });
+                    }
+                    console.log('Google logged in: ');
+                });
             } else {
                 // Update the app to reflect a signed out user
                 // Possible error values:
