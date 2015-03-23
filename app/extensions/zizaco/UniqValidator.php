@@ -6,11 +6,13 @@ class UniqValidator extends Zizaco\Confide\UserValidator {
 
     public $rules = [
         'create' => [
-            'email' => 'required|email',
+            'username' => 'required',
+            'email'    => 'required|email',
             'password' => 'required|min:8',
         ],
         'update' => [
-            'email' => 'required|email',
+            'username' => 'required',
+            'email'    => 'required|email',
             'password' => 'required|min:8',
         ]
     ];
