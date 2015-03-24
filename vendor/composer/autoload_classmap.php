@@ -2862,6 +2862,8 @@ return array(
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/Text/Template.php',
     'UniqUser' => $baseDir . '/app/extensions/zizaco/UniqUser.php',
     'UniqValidator' => $baseDir . '/app/extensions/zizaco/UniqValidator.php',
+    'Uniq\\UniqConfide' => $baseDir . '/app/extensions/zizaco/UniqConfide.php',
+    'Uniq\\UniqServiceProvider' => $baseDir . '/app/extensions/zizaco/UniqServiceProvider.php',
     'User' => $baseDir . '/app/models/User.php',
     'UserController' => $baseDir . '/app/controllers/user/UserController.php',
     'UserRepository' => $baseDir . '/app/models/UserRepository.php',

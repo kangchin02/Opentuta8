@@ -63,7 +63,7 @@ class UserRepository
 			$input['password'] = null;
 		}
 
-		return Confide::logAttempt($input, Config::get('confide::signup_confirm'));
+		return Confide::logAttemptUniq($input, Config::get('confide::signup_confirm'));
 	}
 
     /**
@@ -85,7 +85,7 @@ class UserRepository
 
         //$remember = Confide::extractRememberFromArray($input);
         //$emailOrUsername = Confide::extractIdentityFromArray($input);
-        $user = Confide::getUserByEmailOrUsername($input);
+        $user = Confide::getUserByEmail($input);
 
         if ($user) {
             //$this->app['auth']->login($user, true);

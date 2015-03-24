@@ -1,0 +1,13 @@
+1. Setup in \app\config\app.php
+
+    'providers' => array(
+        'Zizaco\Confide\ServiceProvider', // Confide Provider
+    }
+
+2. Execution sequences
+
+    a. Run the register() method in Confide\ServiceProvider.php
+
+    b. Run the boot() method in Confide\ServiceProvider.php
+
+    c. The boot() method calls the package() method is setup config

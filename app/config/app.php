@@ -112,7 +112,8 @@ return array(
         'Illuminate\Workbench\WorkbenchServiceProvider',
 		
         /* Additional Providers */
-        'Zizaco\Confide\ServiceProvider', // Confide Provider
+        'Uniq\UniqServiceProvider', // Confide Provider
+//        'Zizaco\Confide\ServiceProvider', // Confide Provider
         'Zizaco\Entrust\EntrustServiceProvider', // Entrust Provider for roles
         'Bllim\Datatables\DatatablesServiceProvider', // Datatables
 
