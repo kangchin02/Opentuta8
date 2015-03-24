@@ -53,6 +53,7 @@ class UniqConfide extends \Zizaco\Confide\Confide {
         return false;
     }
 
+
     public function getUserByEmail($identity)
     {
         if (is_array($identity)) {
@@ -94,5 +95,4 @@ class UniqConfide extends \Zizaco\Confide\Confide {
 
         return false;
     }
-
 }

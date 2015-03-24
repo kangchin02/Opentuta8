@@ -12,10 +12,11 @@ define(['marionette','utils/facebook','googleplus'], function (Marionette) {
         },
 
         initialize : function(options){
+            var self = this;
             $(this.el).bind('show',function(){
                 $(".auth-alert").hide();
-                $("#email",this.el).val('');
-                $("#password",this.el).val('');
+                $("#email",self.el).val('');
+                $("#password",self.el).val('');
             });
         },
 

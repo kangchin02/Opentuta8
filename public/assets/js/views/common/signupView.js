@@ -9,10 +9,12 @@ define(['marionette'], function (Marionette) {
         },
 
         initialize : function(options){
+            var self = this;
             $(this.el).bind('show',function(){
                 $(".auth-alert").hide();
-                $("#email",this.el).val('');
-                $("#password",this.el).val('');
+                $("#username",self.el).val('');
+                $("#email",self.el).val('');
+                $("#password",self.el).val('');
             });
         },
 
