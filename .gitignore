@@ -24,3 +24,6 @@ vagrant
 
 # Packages
 _ide_helper.php
+
+# Access
+/public/.htpasswd

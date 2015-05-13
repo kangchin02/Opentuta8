@@ -85,3 +85,25 @@ Authentication
 
 		$this->setUser($user);
 	}
+
+5. Database models
+
+    roles: admin, comment (This can be added through admin panel)
+
+    permissions: manage_blogs, manage_posts, manage_comments, manage_users, post_comment
+
+    permission_role: roles has many permissions
+
+    assigned_roles: user can have many roles and therefore many permissions
+
+6. New database models
+
+    Accounts: username, email, password, isDeleted
+
+    Permissions: super_user, super_user_read_only, admin and etc
+
+    PermissionGroups: customer, admin
+
+    UserPermissions: tracks permissions and permission groups user belongs to
+
+

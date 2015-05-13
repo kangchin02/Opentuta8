@@ -1,3 +1,9 @@
+#AuthName "Restricted Area"
+#AuthType Basic
+#AuthUserFile c:\xampp\htdocs\Opentuta8\public\.htpasswd
+#AuthGroupFile None
+#Require valid-user
+
 <IfModule mod_rewrite.c>
 	Options -MultiViews
 	RewriteEngine On
@@ -8,3 +14,4 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ index.php [L]
 </IfModule>
+
